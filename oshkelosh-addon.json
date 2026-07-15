@@ -1,0 +1,9 @@
+{
+  "addon_id": "podbase",
+  "addon_name": "Podbase",
+  "addon_description": "Print-on-demand tech accessories via Podbase Open API.",
+  "category": "supplier",
+  "version": "1.0.0",
+  "min_oshkelosh_version": "0.1.0",
+  "python_requires": ">=3.11"
+}
