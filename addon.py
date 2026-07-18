@@ -28,16 +28,19 @@ class PodbaseConfig(BaseModel):
 
 
 def _map_shipping(address: Dict[str, Any]) -> Dict[str, Any]:
+    from app.addons.suppliers.address import canonical_address
+
+    addr = canonical_address(address)
     return {
-        "firstName": address.get("first_name", ""),
-        "lastName": address.get("last_name", ""),
-        "email": address.get("email", ""),
-        "address1": address.get("line1", ""),
-        "city": address.get("city", ""),
-        "state": address.get("state", ""),
-        "zip": address.get("zip", ""),
-        "country": address.get("country", ""),
-        "phone": address.get("phone", ""),
+        "firstName": addr["first_name"],
+        "lastName": addr["last_name"],
+        "email": addr["email"],
+        "address1": addr["line1"],
+        "city": addr["city"],
+        "state": addr["state"],
+        "zip": addr["zip"],
+        "country": addr["country_code"],
+        "phone": addr["phone"],
     }
 
 
@@ -123,8 +126,10 @@ class PodbaseAddon(SupplierAddon):
         *,
         external_id: str | None = None,
         supplier_ref: str | None = None,
+        shipping_method: str | None = None,
+        currency: str | None = None,
     ) -> Dict[str, Any]:
-        del supplier_ref
+        del supplier_ref, shipping_method, currency
         client = self._require_client()
         try:
             line_items = []
